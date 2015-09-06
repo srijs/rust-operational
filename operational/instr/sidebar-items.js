@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Coproduct",""]],"struct":[["Identity",""]],"trait":[["Instr",""]]});
