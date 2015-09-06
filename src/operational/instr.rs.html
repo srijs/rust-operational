@@ -58,24 +58,40 @@
 <span id="16">16</span>
 <span id="17">17</span>
 <span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
 </pre><pre class='rust '>
+<span class='doccomment'>/// The trait for an instruction set.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Holds its return type as an associated type.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Instr</span> {
-    <span class='kw'>type</span> <span class='ident'>Param</span>;
+    <span class='kw'>type</span> <span class='ident'>Return</span>;
 }
 
+<span class='doccomment'>/// The instruction that does nothing.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Identity</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>(<span class='kw'>pub</span> <span class='ident'>A</span>);
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Instr</span> <span class='kw'>for</span> <span class='ident'>Identity</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Param</span> <span class='op'>=</span> <span class='ident'>A</span>;
+    <span class='kw'>type</span> <span class='ident'>Return</span> <span class='op'>=</span> <span class='ident'>A</span>;
 }
 
+<span class='doccomment'>/// Combines two instruction sets into one.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// This is useful to compose multiple smaller</span>
+<span class='doccomment'>/// instruction sets into a bigger one.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Coproduct</span><span class='op'>&lt;</span><span class='ident'>I</span>, <span class='ident'>J</span><span class='op'>&gt;</span> {
     <span class='ident'>Left</span>(<span class='ident'>I</span>),
     <span class='ident'>Right</span>(<span class='ident'>J</span>)
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>, <span class='ident'>I</span>: <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Param</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>J</span>: <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Param</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span> <span class='ident'>Instr</span> <span class='kw'>for</span> <span class='ident'>Coproduct</span><span class='op'>&lt;</span><span class='ident'>I</span>, <span class='ident'>J</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Param</span> <span class='op'>=</span> <span class='ident'>A</span>;
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>, <span class='ident'>I</span>: <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Return</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>J</span>: <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Return</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span> <span class='ident'>Instr</span> <span class='kw'>for</span> <span class='ident'>Coproduct</span><span class='op'>&lt;</span><span class='ident'>I</span>, <span class='ident'>J</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Return</span> <span class='op'>=</span> <span class='ident'>A</span>;
 }
 </pre>
 </section>

@@ -45,15 +45,39 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-318' class='srclink' href='../src/operational/lib.rs.html#9-12' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-318' class='srclink' href='../src/operational/lib.rs.html#24-29' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Program&lt;'a, I: <a class='trait' href='../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>, A&gt; {
     Pure(<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;A&gt;),
-    Then(<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;I&gt;, <a class='struct' href='../operational/struct.Kleisli.html' title='operational::Kleisli'>Kleisli</a>&lt;'a, I, I::Param, A&gt;),
-}</pre><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Pure'><code>Pure</code></td><td></td></tr><tr><td id='variant.Then'><code>Then</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a, I: 'a + <a class='trait' href='../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>, A&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, A&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(a: A) -&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, A&gt;</code></h4>
-<h4 id='method.and_then' class='method'><code>fn <a href='#method.and_then' class='fnname'>and_then</a>&lt;B, F&gt;(self, js: F) -&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, B&gt; <span class='where'>where F: 'a + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(A) -&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, B&gt;</span></code></h4>
-<h4 id='method.map' class='method'><code>fn <a href='#method.map' class='fnname'>map</a>&lt;B, F&gt;(self, f: F) -&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, B&gt; <span class='where'>where F: 'a + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(A) -&gt; B</span></code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a, I: 'a + <a class='trait' href='../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>, A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, A&gt;</code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, other: &amp;<a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, A&gt;) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+    Then(<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;I&gt;, <a class='struct' href='../operational/struct.Kleisli.html' title='operational::Kleisli'>Kleisli</a>&lt;'a, I, I::Return, A&gt;),
+}</pre><div class='docblock'><p>Represents a program, i.e. a sequence of instructions.</p>
+
+<ul>
+<li>The <em>instructions</em> are given by the type <code>I</code>.</li>
+<li><code>A</code> is the return type of the program.</li>
+</ul>
+</div><h2 class='variants'>Variants</h2>
+<table><tr><td id='variant.Pure'><code>Pure</code></td><td><div class='docblock'><p>The case <code>Pure(a)</code> means that the program contains no instructions and just returns the result <code>a</code>.</p>
+</div></td></tr><tr><td id='variant.Then'><code>Then</code></td><td><div class='docblock'><p>The case <code>Then(instr, k)</code> means that the first instruction is <code>instr</code> and the remaining program is given by the kleisli arrow <code>k</code>.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a, I: 'a + <a class='trait' href='../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>, A&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, A&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(a: A) -&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, A&gt;</code></h4>
+<div class='docblock'><p>Using a value, constructs the empty program,
+i.e. a program that directly returns that value.</p>
+
+<p>Equivalent to the monadic <code>return</code>.</p>
+</div><h4 id='method.and_then' class='method'><code>fn <a href='#method.and_then' class='fnname'>and_then</a>&lt;B, F&gt;(self, js: F) -&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, B&gt; <span class='where'>where F: 'a + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(A) -&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, B&gt;</span></code></h4>
+<div class='docblock'><p>Appends a continuation to a program. Which means,
+given a function from <code>A</code> to <code>Program&lt;I, B&gt;</code>,
+passes the return value of the program to the function,
+and returns the resulting program.</p>
+
+<p>Equivalent to the monadic <code>&gt;&gt;=</code> operator.</p>
+</div><h4 id='method.map' class='method'><code>fn <a href='#method.map' class='fnname'>map</a>&lt;B, F&gt;(self, f: F) -&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, B&gt; <span class='where'>where F: 'a + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(A) -&gt; B</span></code></h4>
+<div class='docblock'><p>Modifies the return value of the program.
+Seen differently, it lifts a function from
+<code>A</code> to <code>B</code> into a function from <code>Program&lt;I, A&gt;</code>
+to <code>Program&lt;I, B&gt;</code>.</p>
+
+<p>Equivalent to the monadic <code>liftM</code>.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a, I: 'a + <a class='trait' href='../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>, A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, A&gt;</code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, other: &amp;<a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, A&gt;) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 </div><h3 class='impl'><code>impl&lt;'a, I: 'a + <a class='trait' href='../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>, A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, A&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div></section>

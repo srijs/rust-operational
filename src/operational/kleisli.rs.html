@@ -104,6 +104,33 @@
 <span id="62">62</span>
 <span id="63">63</span>
 <span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>transmute</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>;
@@ -112,7 +139,8 @@
 <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>instr</span>::<span class='ident'>Instr</span>;
 <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>Program</span>;
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Param</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span> {
+<span class='doccomment'>/// The Kleisli arrow from `A` to `Program&lt;I, B&gt;`.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Return</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span> {
     <span class='ident'>phan</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span>(<span class='ident'>A</span>, <span class='ident'>B</span>)<span class='op'>&gt;</span>,
     <span class='ident'>deque</span>: <span class='ident'>VecDeque</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Fn</span>(<span class='ident'>Box</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, ()<span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>
 }
@@ -122,26 +150,52 @@
     <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>ptr</span><span class='op'>|</span> <span class='ident'>transmute</span>(<span class='ident'>f</span>(<span class='ident'>transmute</span>::<span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>(<span class='ident'>ptr</span>))))
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Param</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Return</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Creates the identity arrow.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Example</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```rust</span>
+    <span class='doccomment'>/// use operational::{Kleisli, Program};</span>
+    <span class='doccomment'>/// use operational::instr::Identity;</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// let k: Kleisli&lt;Identity&lt;_&gt;, _, _&gt; = Kleisli::new();</span>
+    <span class='doccomment'>/// assert_eq!(k.run(42), Program::new(42));</span>
+    <span class='doccomment'>/// ```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
         <span class='ident'>Kleisli</span> { <span class='ident'>phan</span>: <span class='ident'>PhantomData</span>, <span class='ident'>deque</span>: <span class='ident'>VecDeque</span>::<span class='ident'>new</span>() }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_boxed</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Param</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>A</span>, <span class='ident'>B</span>, <span class='ident'>C</span>, <span class='ident'>F</span><span class='op'>&gt;</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_boxed</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Return</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>A</span>, <span class='ident'>B</span>, <span class='ident'>C</span>, <span class='ident'>F</span><span class='op'>&gt;</span>
     (<span class='kw-2'>mut</span> <span class='ident'>k</span>: <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span>, <span class='ident'>C</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>F</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Fn</span>(<span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>B</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
     <span class='ident'>k</span>.<span class='ident'>deque</span>.<span class='ident'>push_back</span>(<span class='kw'>unsafe</span> { <span class='ident'>fn_transmute</span>(<span class='ident'>f</span>) });
     <span class='ident'>Kleisli</span> { <span class='ident'>phan</span>: <span class='ident'>PhantomData</span>, <span class='ident'>deque</span>: <span class='ident'>k</span>.<span class='ident'>deque</span> }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Param</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Instr</span><span class='op'>&lt;</span><span class='ident'>Return</span><span class='op'>=</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span> {
 
+    <span class='doccomment'>/// Appends the given function to the tail of the arrow.</span>
+    <span class='doccomment'>/// This corresponds to closure composition at the codomain (post-composition).</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Example</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```rust</span>
+    <span class='doccomment'>/// use operational::{Kleisli, Program};</span>
+    <span class='doccomment'>/// use operational::instr::Identity;</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// let k: Kleisli&lt;Identity&lt;_&gt;, _, _&gt; = Kleisli::new()</span>
+    <span class='doccomment'>///     .append(|x| Program::new(x + 1));</span>
+    <span class='doccomment'>/// assert_eq!(k.run(42), Program::new(43));</span>
+    <span class='doccomment'>/// ```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>C</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span>, <span class='ident'>C</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Fn</span>(<span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
         <span class='ident'>append_boxed</span>(<span class='self'>self</span>, <span class='kw'>move</span> <span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span> <span class='ident'>f</span>(<span class='op'>*</span><span class='ident'>b</span>))
     }
 
+    <span class='doccomment'>/// Given an input, runs the arrow to completion and return</span>
+    <span class='doccomment'>/// the resulting program.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>a</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>B</span><span class='op'>&gt;</span> {
         <span class='kw'>unsafe</span> {
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>transmute</span>::<span class='op'>&lt;</span><span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, ()<span class='op'>&gt;&gt;</span>(<span class='ident'>Program</span>::<span class='ident'>new</span>(<span class='ident'>a</span>));

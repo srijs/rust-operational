@@ -99,22 +99,76 @@
 <span id="57">57</span>
 <span id="58">58</span>
 <span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
 </pre><pre class='rust '>
+<span class='doccomment'>//! The operational library makes it easy to implement monads with tricky control flow.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! This is very useful for: writing web applications in a sequential style,</span>
+<span class='doccomment'>//! programming games with a uniform interface for human and AI players and easy replay,</span>
+<span class='doccomment'>//! implementing fast parser monads, designing monadic DSLs, etc.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! A thorough introduction to the ideas behind this library is given in</span>
+<span class='doccomment'>//! [&quot;The Operational Monad Tutorial&quot;](http://apfelmus.nfshost.com/articles/operational-monad.html),</span>
+<span class='doccomment'>//! published in [Issue 15 of the Monad.Reader](http://themonadreader.wordpress.com/2010/01/26/issue-15/).</span>
+
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 
+<span class='doccomment'>/// Contains the `Instr` trait, and a few useful utilities for working with instructions.</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>instr</span>;
 <span class='kw'>use</span> <span class='ident'>instr</span>::<span class='ident'>Instr</span>;
 
 <span class='kw'>mod</span> <span class='ident'>kleisli</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>kleisli</span>::<span class='ident'>Kleisli</span>;
 
+<span class='doccomment'>/// Represents a program, i.e. a sequence of instructions.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// - The _instructions_ are given by the type `I`.</span>
+<span class='doccomment'>/// - `A` is the return type of the program.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='ident'>Instr</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// The case `Pure(a)` means that the program contains no instructions and just returns the result `a`.</span>
     <span class='ident'>Pure</span>(<span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>),
-    <span class='ident'>Then</span>(<span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>, <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>I</span>::<span class='ident'>Param</span>, <span class='ident'>A</span><span class='op'>&gt;</span>)
+    <span class='doccomment'>/// The case `Then(instr, k)` means that the first instruction is `instr` and the remaining program is given by the kleisli arrow `k`.</span>
+    <span class='ident'>Then</span>(<span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>, <span class='ident'>Kleisli</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>I</span>::<span class='ident'>Return</span>, <span class='ident'>A</span><span class='op'>&gt;</span>)
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Instr</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
 
+    <span class='doccomment'>/// Using a value, constructs the empty program,</span>
+    <span class='doccomment'>/// i.e. a program that directly returns that value.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Equivalent to the monadic `return`.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>a</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
         <span class='ident'>Program</span>::<span class='ident'>Pure</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>a</span>))
     }
@@ -127,6 +181,12 @@
         }
     }
 
+    <span class='doccomment'>/// Appends a continuation to a program. Which means,</span>
+    <span class='doccomment'>/// given a function from `A` to `Program&lt;I, B&gt;`,</span>
+    <span class='doccomment'>/// passes the return value of the program to the function,</span>
+    <span class='doccomment'>/// and returns the resulting program.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Equivalent to the monadic `&gt;&gt;=` operator.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>and_then</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>F</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>js</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>B</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Fn</span>(<span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>B</span><span class='op'>&gt;</span> {
         <span class='kw'>match</span> <span class='self'>self</span> {
@@ -135,6 +195,12 @@
         }
     }
 
+    <span class='doccomment'>/// Modifies the return value of the program.</span>
+    <span class='doccomment'>/// Seen differently, it lifts a function from</span>
+    <span class='doccomment'>/// `A` to `B` into a function from `Program&lt;I, A&gt;`</span>
+    <span class='doccomment'>/// to `Program&lt;I, B&gt;`.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Equivalent to the monadic `liftM`.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>map</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>F</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Program</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span>, <span class='ident'>B</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>F</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Fn</span>(<span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='ident'>B</span> {
         <span class='self'>self</span>.<span class='ident'>and_then</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>a</span><span class='op'>|</span> <span class='ident'>Program</span>::<span class='ident'>new</span>(<span class='ident'>f</span>(<span class='ident'>a</span>)))

@@ -45,12 +45,16 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-24' class='srclink' href='../../src/operational/instr.rs.html#11-14' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-24' class='srclink' href='../../src/operational/instr.rs.html#19-22' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Coproduct&lt;I, J&gt; {
     Left(I),
     Right(J),
-}</pre><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Left'><code>Left</code></td><td></td></tr><tr><td id='variant.Right'><code>Right</code></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;A, I: <a class='trait' href='../../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>&lt;Param=A&gt;, J: <a class='trait' href='../../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>&lt;Param=A&gt;&gt; <a class='trait' href='../../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a> for <a class='enum' href='../../operational/instr/enum.Coproduct.html' title='operational::instr::Coproduct'>Coproduct</a>&lt;I, J&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Param' class='type'><code>type Param = A</code></h4>
+}</pre><div class='docblock'><p>Combines two instruction sets into one.</p>
+
+<p>This is useful to compose multiple smaller
+instruction sets into a bigger one.</p>
+</div><h2 class='variants'>Variants</h2>
+<table><tr><td id='variant.Left'><code>Left</code></td><td></td></tr><tr><td id='variant.Right'><code>Right</code></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;A, I: <a class='trait' href='../../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>&lt;Return=A&gt;, J: <a class='trait' href='../../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>&lt;Return=A&gt;&gt; <a class='trait' href='../../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a> for <a class='enum' href='../../operational/instr/enum.Coproduct.html' title='operational::instr::Coproduct'>Coproduct</a>&lt;I, J&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Return' class='type'><code>type Return = A</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

@@ -45,14 +45,24 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-0' class='srclink' href='../src/operational/lib.rs.html#1-59' title='goto source code'>[src]</a></span></h1>
-<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+        </span><a id='src-0' class='srclink' href='../src/operational/lib.rs.html#1-92' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>The operational library makes it easy to implement monads with tricky control flow.</p>
+
+<p>This is very useful for: writing web applications in a sequential style,
+programming games with a uniform interface for human and AI players and easy replay,
+implementing fast parser monads, designing monadic DSLs, etc.</p>
+
+<p>A thorough introduction to the ideas behind this library is given in
+<a href="http://apfelmus.nfshost.com/articles/operational-monad.html">&quot;The Operational Monad Tutorial&quot;</a>,
+published in <a href="http://themonadreader.wordpress.com/2010/01/26/issue-15/">Issue 15 of the Monad.Reader</a>.</p>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                     <tr class=' module-item'>
                         <td><a class='mod' href='instr/index.html'
                                title='operational::instr'>instr</a></td>
                         <td class='docblock short'>
-                             
+                             <p>Contains the <code>Instr</code> trait, and a few useful utilities for working with instructions.</p>
+
                         </td>
                     </tr>
                 </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -61,7 +71,8 @@
                         <td><a class='struct' href='struct.Kleisli.html'
                                title='operational::Kleisli'>Kleisli</a></td>
                         <td class='docblock short'>
-                             
+                             <p>The Kleisli arrow from <code>A</code> to <code>Program&lt;I, B&gt;</code>.</p>
+
                         </td>
                     </tr>
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -70,7 +81,8 @@
                         <td><a class='enum' href='enum.Program.html'
                                title='operational::Program'>Program</a></td>
                         <td class='docblock short'>
-                             
+                             <p>Represents a program, i.e. a sequence of instructions.</p>
+
                         </td>
                     </tr>
                 </table></section>

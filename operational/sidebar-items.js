@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Program",""]],"mod":[["instr",""]],"struct":[["Kleisli",""]]});
+initSidebarItems({"enum":[["Program","Represents a program, i.e. a sequence of instructions."]],"mod":[["instr","Contains the `Instr` trait, and a few useful utilities for working with instructions."]],"struct":[["Kleisli","The Kleisli arrow from `A` to `Program<I, B>`."]]});

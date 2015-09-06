@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Coproduct",""]],"struct":[["Identity",""]],"trait":[["Instr",""]]});
+initSidebarItems({"enum":[["Coproduct","Combines two instruction sets into one."]],"struct":[["Identity","The instruction that does nothing."]],"trait":[["Instr","The trait for an instruction set."]]});

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Kleisli",""]]});
+initSidebarItems({"struct":[["Kleisli","The Kleisli arrow from `A` to `Program<I, B>`."]]});
