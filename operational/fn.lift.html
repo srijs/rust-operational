@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `Identity` struct in crate `operational`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, Identity">
+    <meta name="description" content="API documentation for the Rust `lift` fn in crate `operational`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, lift">
 
-    <title>operational::instr::Identity - Rust</title>
+    <title>operational::lift - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
 
     
     
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>operational</a>::<wbr><a href='index.html'>instr</a></p><script>window.sidebarCurrent = {name: 'Identity', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='index.html'>operational</a></p><script>window.sidebarCurrent = {name: 'lift', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,14 +40,13 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>operational</a>::<wbr><a href='index.html'>instr</a>::<wbr><a class='struct' href=''>Identity</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content fn">
+<h1 class='fqn'><span class='in-band'>Function <a href='index.html'>operational</a>::<wbr><a class='fn' href=''>lift</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-13' class='srclink' href='../../src/operational/instr.rs.html#11' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Identity&lt;A&gt;(pub A);</pre><div class='docblock'><p>The instruction that does nothing.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;A&gt; <a class='trait' href='../../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a> for <a class='struct' href='../../operational/instr/struct.Identity.html' title='operational::instr::Identity'>Identity</a>&lt;A&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Return' class='type'><code>type Return = A</code></h4>
+        </span><a id='src-637' class='srclink' href='../src/operational/lib.rs.html#98-100' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn lift&lt;'a, I: 'a + <a class='trait' href='../operational/instr/trait.Instr.html' title='operational::instr::Instr'>Instr</a>&gt;(i: I) -&gt; <a class='enum' href='../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, I, I::Return&gt;</pre><div class='docblock'><p>Lift an instruction into a program.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -98,13 +97,13 @@
     
 
     <script>
-        window.rootPath = "../../";
+        window.rootPath = "../";
         window.currentCrate = "operational";
         window.playgroundUrl = "";
     </script>
-    <script src="../../jquery.js"></script>
-    <script src="../../main.js"></script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script async src="../search-index.js"></script>
 </body>
 </html>

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `instr` mod in crate `operational`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, instr">
+    <meta name="description" content="API documentation for the Rust `identity` fn in crate `operational`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, identity">
 
-    <title>operational::instr - Rust</title>
+    <title>operational::instr::identity - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>operational</a></p><script>window.sidebarCurrent = {name: 'instr', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>operational</a>::<wbr><a href='index.html'>instr</a></p><script>window.sidebarCurrent = {name: 'identity', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,53 +40,13 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>operational</a>::<wbr><a class='mod' href=''>instr</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content fn">
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>operational</a>::<wbr><a href='index.html'>instr</a>::<wbr><a class='fn' href=''>identity</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-5' class='srclink' href='../../src/operational/instr.rs.html#1-32' title='goto source code'>[src]</a></span></h1>
-<div class='docblock'><p>Contains the <code>Instr</code> trait, and a few useful utilities for working with instructions.</p>
-</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Identity.html'
-                               title='operational::instr::Identity'>Identity</a></td>
-                        <td class='docblock short'>
-                             <p>The instruction that does nothing.</p>
-
-                        </td>
-                    </tr>
-                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
-<table>
-                    <tr class=' module-item'>
-                        <td><a class='enum' href='enum.Coproduct.html'
-                               title='operational::instr::Coproduct'>Coproduct</a></td>
-                        <td class='docblock short'>
-                             <p>Combines two instruction sets into one.</p>
-
-                        </td>
-                    </tr>
-                </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
-<table>
-                    <tr class=' module-item'>
-                        <td><a class='trait' href='trait.Instr.html'
-                               title='operational::instr::Instr'>Instr</a></td>
-                        <td class='docblock short'>
-                             <p>The trait for an instruction set.</p>
-
-                        </td>
-                    </tr>
-                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
-<table>
-                    <tr class=' module-item'>
-                        <td><a class='fn' href='fn.identity.html'
-                               title='operational::instr::identity'>identity</a></td>
-                        <td class='docblock short'>
-                             
-                        </td>
-                    </tr>
-                </table></section>
+        </span><a id='src-27' class='srclink' href='../../src/operational/instr.rs.html#17-19' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn identity&lt;'a, A: 'a&gt;(a: A) -&gt; <a class='enum' href='../../operational/enum.Program.html' title='operational::Program'>Program</a>&lt;'a, <a class='struct' href='../../operational/instr/struct.Identity.html' title='operational::instr::Identity'>Identity</a>&lt;A&gt;, A&gt;</pre></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
